@@ -1,0 +1,93 @@
+/* Căn giữa toàn bộ nội dung */
+.container {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(30, 30, 30, 0.95);
+}
+
+/* Hộp chứa form đăng ký */
+.register-box {
+    width: 450px; /* Rộng hơn Login một chút */
+    padding: 15px;
+    background-color: #2b2b2b;
+    border-radius: 10px;
+    border-color: #555555;
+    border-width: 1px;
+}
+
+/* Tiêu đề */
+.header-title {
+    font-size: 26px;
+    -unity-font-style: bold;
+    color: #ffffff;
+    margin-bottom: 25px;
+    align-self: center;
+}
+
+/* Các trường nhập liệu chung */
+.input-field {
+    margin-left:0;
+}
+
+/* Label của các trường nhập liệu */
+.input-field > .unity-base-field__label {
+    color: #dddddd;
+    min-width: 120px; /* Tăng độ rộng để chứa chữ 'Character Name' không bị xuống dòng */
+}
+
+/* Nút Register */
+.register-button {
+    margin-top: 15px;
+    height: 45px;
+    background-color: #2ea043; /* Màu xanh lá cây để phân biệt với nút Login */
+    color: white;
+    font-size: 16px;
+    -unity-font-style: bold;
+    border-radius: 5px;
+    border-width: 0;
+}
+
+.register-button:hover {
+    background-color: #2c974b;
+}
+
+.register-button:active {
+    background-color: #238636;
+}
+
+/* Dòng trạng thái (Status) */
+.status-label {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #ff5555;
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+/* --- Thêm vào cuối file USS --- */
+
+/* Đảm bảo hộp chứa chính có position relative để nút Back căn theo nó */
+.login-box, .register-box {
+    position: relative;
+}
+
+/* Style cho nút Back (Mũi tên) */
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 35px;
+    height: 35px;
+    background-color: transparent; /* Nền trong suốt */
+    color: #aaaaaa;
+    font-size: 24px; /* Kích thước mũi tên */
+    border-width: 0;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.back-button:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%; /* Hiệu ứng tròn khi di chuột vào */
+}

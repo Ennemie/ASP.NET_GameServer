@@ -1,0 +1,294 @@
+/* =========================================================
+   1. MAIN CONTAINER & SHOP BOX
+   ========================================================= */
+
+/* Màn nền mờ che phủ toàn bộ màn hình */
+.container {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(20, 20, 20, 0.9); /* Màu tối hơn cho độ sâu */
+}
+
+/* Hộp cửa hàng chính */
+.shop-box {
+    position: relative;
+    width: 600px; /* Rộng hơn chút để thoải mái hiển thị tên xe/item dài */
+    height: 700px;
+    padding: 25px;
+    background-color: #2b2b2b;
+    border-radius: 12px;
+    border-width: 1px;
+    border-color: #555555;
+    
+    /* Hiệu ứng bóng đổ (chỉ hiển thị trên một số phiên bản Unity mới, nhưng cứ thêm vào cho đẹp) */
+    /* -unity-box-shadow-color: rgba(0,0,0,0.5); */
+}
+
+/* =========================================================
+   2. HEADER AREA (TITLE + WALLET + CLOSE)
+   ========================================================= */
+
+/* Nút Close (Góc trên bên phải) */
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    width: 32px;
+    height: 32px;
+    background-color: #ff4d4d;
+    color: white;
+    font-size: 18px;
+    -unity-font-style: bold;
+    border-width: 0;
+    border-radius: 6px;
+    cursor: link;
+}
+
+.close-button:hover {
+    background-color: #ff1a1a;
+}
+
+/* Container chứa Tiêu đề và Ví tiền (Nằm ngang) */
+.header-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: center; /* Căn giữa toàn bộ cụm header */
+    margin-bottom: 20px;
+    margin-top: 5px;
+}
+
+/* Tiêu đề "Shop" */
+.header-title {
+    font-size: 32px;
+    -unity-font-style: bold;
+    color: #ffffff;
+    margin-right: 20px; /* Khoảng cách với ví tiền */
+}
+
+/* Hiển thị số dư Ví */
+.wallet-label {
+    font-size: 18px;
+    color: #FFD700; /* Màu vàng Gold */
+    -unity-font-style: bold;
+    background-color: rgba(0, 0, 0, 0.3); /* Nền đen mờ nhẹ */
+    border-width: 1px;
+    border-color: #FFD700;
+    border-radius: 8px;
+    padding: 8px 15px;
+}
+
+/* =========================================================
+   3. TABS (ITEM / VEHICLE)
+   ========================================================= */
+
+.tab-container {
+    flex-direction: row;
+    margin-bottom: 15px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    padding: 3px;
+}
+
+.tab-button {
+    flex-grow: 1;
+    height: 45px;
+    background-color: transparent;
+    color: #888888;
+    border-width: 0;
+    font-size: 18px;
+    -unity-font-style: bold;
+    border-radius: 6px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.tab-button:hover {
+    color: #dddddd;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Trạng thái Tab đang được chọn */
+.active-tab {
+    background-color: #0078d7; /* Xanh dương */
+    color: white;
+}
+
+/* =========================================================
+   4. PRODUCT LIST VIEW
+   ========================================================= */
+
+.product-list {
+    flex-grow: 1; /* Chiếm toàn bộ khoảng trống còn lại */
+    height: 50px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    border-width: 1px;
+    border-color: #444;
+    margin-bottom: 20px;
+    padding: 5px; /* Padding bên trong list */
+}
+
+/* Style thanh cuộn (Scroller) để trông hiện đại hơn */
+.unity-scroller--vertical {
+    width: 12px;
+}
+.unity-scroller__high-button, .unity-scroller__low-button {
+    display: none; /* Ẩn 2 nút mũi tên nhỏ của thanh cuộn */
+}
+
+/* =========================================================
+   5. ITEM ROW (DÙNG CHO SHOP ITEM ROW UXML)
+   ========================================================= */
+
+/* Container của từng dòng sản phẩm */
+.row-container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between; /* Tên bên trái, Nút bên phải */
+    padding: 10px 15px;
+    margin-bottom: 5px; /* Khoảng cách giữa các dòng */
+    background-color: #333333;
+    border-radius: 6px;
+    border-left-width: 4px;
+    border-left-color: #555; /* Viền trái mặc định */
+}
+
+/* Hiệu ứng khi di chuột vào dòng sản phẩm */
+.row-container:hover {
+    background-color: #3a3a3a;
+    border-left-color: #0078d7; /* Viền trái sáng lên */
+}
+
+/* Tên sản phẩm */
+.row-item-name {
+    font-size: 16px;
+    color: #eeeeee;
+    -unity-font-style: bold;
+    white-space: normal; /* Cho phép xuống dòng nếu tên quá dài */
+}
+
+/* Container chứa nút cộng trừ */
+.qty-control {
+    flex-direction: row;
+    align-items: center;
+    background-color: #222;
+    border-radius: 5px;
+    padding: 2px;
+    border-width: 1px;
+    border-color: #444;
+}
+
+/* Nút + và - */
+.qty-btn {
+    width: 32px;
+    height: 32px;
+    background-color: #444;
+    color: white;
+    border-width: 0;
+    font-size: 20px;
+    -unity-font-style: bold;
+    border-radius: 4px;
+}
+
+.qty-btn:hover {
+    background-color: #666;
+}
+
+.qty-btn:active {
+    background-color: #888;
+}
+
+/* Số lượng hiển thị ở giữa */
+.qty-display {
+    min-width: 40px;
+    color: #00ffcc; /* Màu xanh ngọc cho số lượng */
+    -unity-text-align: middle-center;
+    font-size: 18px;
+    -unity-font-style: bold;
+}
+
+/* =========================================================
+   6. FOOTER (STATUS & BUY BUTTON)
+   ========================================================= */
+
+.footer-container {
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+/* Dòng trạng thái (Tổng tiền / Lỗi) */
+.status-label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #ffffff;
+    -unity-text-align: middle-center;
+    -unity-font-style: italic;
+    height: 20px;
+}
+
+/* Nút MUA hàng */
+.buy-button {
+    height: 55px;
+    background-color: #2ea043; /* Màu xanh lá (GitHub style) */
+    color: white;
+    font-size: 22px;
+    -unity-font-style: bold;
+    border-width: 0;
+    border-radius: 8px;
+    transition: 0.1s; /* Animation nhẹ (nếu hỗ trợ) */
+}
+
+.buy-button:hover {
+    background-color: #2c974b;
+    scale: 1.02; /* Phóng to nhẹ khi hover (Unity 2021+) */
+}
+
+.buy-button:active {
+    background-color: #238636;
+    scale: 0.98;
+}
+/* --- Thêm vào file ShopHub.uss --- */
+
+/* Style cho giá tiền */
+.row-item-price {
+    font-size: 16px;
+    color: #FFD700; /* Màu vàng Gold cho tiền */
+    -unity-font-style: bold;
+    min-width: 80px; /* Đặt chiều rộng tối thiểu để các dòng thẳng cột */
+    -unity-text-align: middle-right; /* Căn lề phải để số tiền thẳng hàng đơn vị */
+    margin-right: 15px; /* Cách bộ nút bấm một khoảng */
+}
+
+/* Cập nhật lại row-container để căn chỉnh đẹp hơn */
+.row-container {
+    flex-direction: row;
+    align-items: center;
+    /* Dùng space-between để đẩy: Tên (Trái) - Giá (Giữa/Phải) - Nút (Phải) */
+    justify-content: space-between; 
+    padding: 10px 15px;
+    background-color: #333;
+    border-bottom-width: 1px;
+    border-bottom-color: #444;
+}
+
+/* Đảm bảo tên item chiếm phần còn thừa của không gian để đẩy giá và nút sang phải */
+.row-item-name {
+    flex-grow: 1; 
+    font-size: 16px;
+    color: white;
+    -unity-font-style: bold;
+}
+/* --- Thêm vào ShopHub.uss --- */
+
+.row-item-icon {
+    width: 50px;       /* Chiều rộng ảnh */
+    height: 50px;      /* Chiều cao ảnh */
+    margin-right: 15px; /* Khoảng cách với Tên vật phẩm */
+    background-color: #444; /* Màu nền tạm thời khi chưa tải được ảnh */
+    border-radius: 8px; /* Bo tròn góc */
+    flex-shrink: 0;    /* Không bị co lại khi màn hình nhỏ */
+    
+    /* Căn chỉnh ảnh nền */
+    -unity-background-scale-mode: scale-to-fit; 
+}

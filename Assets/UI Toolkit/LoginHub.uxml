@@ -1,0 +1,16 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/LoginHub.uss?fileID=7433441132597879392&amp;guid=2454dafb01a082e4784e06d35984d59a&amp;type=3#LoginHub" />
+    <ui:VisualElement name="Container" class="container">
+        <ui:VisualElement name="LoginBox" class="login-box">
+            <ui:Button text="←" name="btn-back" class="back-button" />
+            <ui:Label text="Login" class="header-title" style="margin-bottom: 4px;" />
+            <ui:TextField label="Email" name="input-email" class="input-field" style="margin-bottom: 2px;" />
+            <ui:VisualElement name="password-container" class="password-container">
+                <ui:TextField label="Password" name="input-password" class="input-field" style="margin-bottom: 2px;" />
+            </ui:VisualElement>
+            <ui:Button text="Log in" name="btn-login" class="login-button" />
+            <ui:Button text="Đăng ký nếu bạn chưa có tài khoản!" name="btn-goto-register" class="link-button" />
+            <ui:Label name="lbl-status" class="status-label" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

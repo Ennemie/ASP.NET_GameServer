@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/LoggedInHub.uss?fileID=7433441132597879392&amp;guid=acdf5884956fe0340ac290e4190f47a5&amp;type=3#LoggedInHub" />
+    <ui:VisualElement name="MainContainer" class="main-container">
+        <ui:VisualElement name="TopBar" class="top-bar">
+            <ui:Button text="LeaderBoard" name="btnLeaderboard" class="nav-btn" style="width: 80px; font-size: 11px;" />
+            <ui:Button text="Shop" name="btnShop" class="nav-btn" style="width: 80px; font-size: 11px;" />
+            <ui:Button text="Log Out" name="btnLogout" class="nav-btn btn-logout" style="width: 80px; font-size: 11px;" />
+        </ui:VisualElement>
+        <ui:VisualElement name="CenterArea" class="center-area">
+            <ui:Label text="Hello" name="lblGreeting" class="greeting-text" style="height: 219px; align-items: center; justify-content: center; -unity-text-align: middle-center; color: rgb(254, 0, 50); text-shadow: 3px 3px 1111111px rgb(0, 0, 0);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

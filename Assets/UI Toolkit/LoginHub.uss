@@ -1,0 +1,92 @@
+/* Căn giữa toàn bộ nội dung trên màn hình */
+.container {
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(30, 30, 30, 0.9); /* Màu nền tối mờ */
+}
+
+/* Hộp chứa form đăng nhập */
+.login-box {
+    width: 400px;
+    padding: 20px;
+    background-color: #2b2b2b;
+    border-radius: 10px;
+    border-color: #555555;
+    border-width: 1px;
+}
+
+/* Tiêu đề */
+.header-title {
+    font-size: 24px;
+    -unity-font-style: bold;
+    color: #ffffff;
+    margin-bottom: 20px;
+    align-self: center;
+}
+
+/* Các trường nhập liệu (Email, Password) */
+.input-field {
+    margin-bottom: 15px;
+}
+
+.input-field > .unity-base-field__label {
+    color: #dddddd;
+    min-width: 80px;
+}
+
+/* Nút Log in */
+.login-button {
+    margin-top: 10px;
+    height: 40px;
+    background-color: #0078d7;
+    color: white;
+    font-size: 16px;
+    -unity-font-style: bold;
+    border-radius: 5px;
+    border-width: 0;
+}
+
+.login-button:hover {
+    background-color: #005a9e;
+}
+
+.login-button:active {
+    background-color: #004578;
+}
+
+/* Dòng trạng thái (Status) */
+.status-label {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #ff5555; /* Màu đỏ cho lỗi, bạn có thể đổi trong code C# nếu thành công */
+    -unity-text-align: middle-center;
+    white-space: normal;
+}
+/* --- Thêm vào cuối file USS --- */
+
+/* Đảm bảo hộp chứa chính có position relative để nút Back căn theo nó */
+.login-box, .register-box {
+    position: relative;
+}
+
+/* Style cho nút Back (Mũi tên) */
+.back-button {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: 35px;
+    height: 35px;
+    background-color: transparent; /* Nền trong suốt */
+    color: #aaaaaa;
+    font-size: 24px; /* Kích thước mũi tên */
+    border-width: 0;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.back-button:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%; /* Hiệu ứng tròn khi di chuột vào */
+}

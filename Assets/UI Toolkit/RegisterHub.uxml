@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/RegisterHub.uss?fileID=7433441132597879392&amp;guid=14884adc5b0827f4ba4ec5a00c9034ed&amp;type=3#RegisterHub" />
+    <ui:VisualElement name="Container" class="container">
+        <ui:VisualElement name="RegisterBox" class="register-box" style="padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px;">
+            <ui:Button text="←" name="btn-back" class="back-button" />
+            <ui:Label text="Create Account" class="header-title" style="margin-bottom: 0; margin-top: 0;" />
+            <ui:TextField label="Character Name" name="input-charname" class="input-field" />
+            <ui:TextField label="Email" name="input-email" class="input-field" />
+            <ui:VisualElement name="password-container" class="password-container">
+                <ui:TextField label="Password" name="input-password" class="input-field" />
+            </ui:VisualElement>
+            <ui:DropdownField label="Game Mode" name="drp-gamemode" choices="Survival,Creative,Adventure" index="0" class="input-field" />
+            <ui:Button text="Register" name="btn-register" class="register-button" style="margin-top: 2px;" />
+            <ui:Label name="lbl-status" class="status-label" style="height: 15px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

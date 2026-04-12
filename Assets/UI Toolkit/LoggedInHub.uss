@@ -1,0 +1,55 @@
+/* Container chính bao phủ toàn màn hình */
+.main-container {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.5);
+    /* flex-direction mặc định là Column (dọc) nên không cần khai báo */
+}
+
+/* 1. Thanh Top Bar: Đẩy các nút sang phải */
+.top-bar {
+    height: 60px;
+    flex-direction: row;       /* Xếp các nút nằm ngang */
+    justify-content: flex-end; /* Quan trọng: Đẩy toàn bộ nội dung sang PHẢI */
+    align-items: center;       /* Căn giữa theo chiều dọc của thanh bar */
+    padding-right: 20px;       /* Cách lề phải một chút cho đẹp */
+    padding-top: 10px;
+}
+
+/* 2. Vùng trung tâm: Chiếm hết chỗ trống còn lại */
+.center-area {
+    flex-grow: 1;              /* Tự động giãn ra lấp đầy phần còn lại của màn hình */
+    justify-content: center;   /* Căn giữa DỌC */
+    align-items: center;       /* Căn giữa NGANG */
+}
+
+/* Style cho chữ Xin chào (To hơn cho nổi bật) */
+.greeting-text {
+    font-size: 48px;           /* Chữ to rõ giữa màn hình */
+    color: white;
+    -unity-font-style: bold;
+    text-shadow: 2px 2px 0px black; /* Tạo bóng đen cho chữ dễ đọc */
+}
+
+/* Style chung cho các nút (Giữ nguyên) */
+.nav-btn {
+    width: 120px;
+    height: 40px;
+    margin-left: 10px;
+    background-color: #555555;
+    color: white;
+    font-size: 14px;
+    border-radius: 5px;
+    border-width: 0;
+}
+
+.nav-btn:hover {
+    background-color: #777777;
+}
+
+.btn-logout {
+    background-color: #d9534f;
+}
+
+.btn-logout:hover {
+    background-color: #c9302c;
+}

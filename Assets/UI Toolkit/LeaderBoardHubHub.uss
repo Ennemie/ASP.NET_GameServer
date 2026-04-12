@@ -1,0 +1,104 @@
+.main-container {
+    flex-grow: 1;
+    background-color: rgba(0, 0, 0, 0.8);
+    align-items: center;
+    justify-content: center;
+}
+
+/* === BẢNG TO HƠN === */
+.board-panel {
+    width: 95%;  /* Tăng từ 80% lên 95% màn hình */
+    height: 90%; /* Tăng từ 70% lên 90% màn hình */
+    background-color: #2c2c2c;
+    border-radius: 15px;
+    border-width: 3px;
+    border-color: #ffd700;
+    padding: 20px;
+}
+
+/* Tiêu đề TO HƠN */
+.board-title {
+    font-size: 50px; /* Tăng từ 30 lên 50 */
+    color: #ffd700;
+    -unity-font-style: bold;
+    align-self: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 0px black;
+}
+
+/* Dòng cao hơn */
+.row {
+    flex-direction: row;
+    height: 60px; /* Tăng chiều cao dòng từ 40 lên 60px cho thoáng */
+    align-items: center;
+    border-bottom-width: 1px;
+    border-bottom-color: #555;
+}
+
+.header-row {
+    background-color: #444;
+    border-bottom-width: 3px;
+    border-bottom-color: #ffd700;
+}
+
+/* Chữ Header TO HƠN */
+.header-row > Label {
+    -unity-font-style: bold;
+    color: #ffffff;
+    font-size: 24px; /* Tăng cỡ chữ tiêu đề cột */
+}
+
+/* Chữ Dữ liệu TO HƠN */
+.data-row > Label {
+    color: #dddddd;
+    font-size: 20px; /* Tăng cỡ chữ nội dung */
+}
+
+.even-row {
+    background-color: #353535;
+}
+
+/* === CĂN CHỈNH CỘT (Điều chỉnh lại vì chữ Exp ngắn đi) === */
+.col-id {
+    width: 7%; /* Giảm bớt ID */
+    -unity-text-align: middle-center;
+}
+
+.col-name {
+    width: 45%; /* Tăng chiều rộng cho Tên (để hiển thị tên dài) */
+    padding-left: 20px;
+    -unity-text-align: middle-left; 
+}
+
+.col-mode {
+    width: 25%;
+    -unity-text-align: middle-center;
+}
+
+.col-exp {
+    width: 20%; /* Giảm bớt vì chữ Exp ngắn */
+    -unity-text-align: middle-center;
+    color: #00ff00;
+    -unity-font-style: bold;
+}
+
+.scroll-list {
+    flex-grow: 1;
+    margin-bottom: 20px;
+}
+
+/* Nút đóng TO HƠN */
+.btn-close {
+    height: 60px; /* To hơn */
+    width: 200px;
+    align-self: center;
+    background-color: #d9534f;
+    color: white;
+    font-size: 24px;
+    border-radius: 10px;
+}
+
+.btn-close:hover {
+    background-color: #c9302c;
+    scale: 1.05; /* Hiệu ứng phóng to nhẹ khi di chuột */
+}

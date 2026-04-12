@@ -1,0 +1,17 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements">
+    <ui:VisualElement name="row-container" class="row-container">
+        
+        <ui:VisualElement name="img-item-icon" class="row-item-icon" />
+
+        <ui:Label text="Item Name" name="lbl-item-name" class="row-item-name" />
+
+        <ui:Label text="$100" name="lbl-item-price" class="row-item-price" />
+
+        <ui:VisualElement class="qty-control">
+            <ui:Button text="-" name="btn-decrease" class="qty-btn" />
+            <ui:Label text="0" name="lbl-quantity" class="qty-display" />
+            <ui:Button text="+" name="btn-increase" class="qty-btn" />
+        </ui:VisualElement>
+
+    </ui:VisualElement>
+</ui:UXML>

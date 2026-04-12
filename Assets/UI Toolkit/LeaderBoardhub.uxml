@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/LeaderBoardHubHub.uss?fileID=7433441132597879392&amp;guid=799fb23e64a7094419d775be0b83ca7b&amp;type=3#LeaderBoardHubHub" />
+    <ui:VisualElement name="MainContainer" class="main-container">
+        <ui:VisualElement name="BoardPanel" class="board-panel" style="padding-bottom: 0;">
+            <ui:Label text="LEADERBOARD" class="board-title" style="height: 49px; font-size: 30px; margin-bottom: 0; padding-top: 0;" />
+            <ui:VisualElement class="row header-row" style="height: 30px;">
+                <ui:Label text="ID" class="col-id" style="width: 40px; font-size: 16px;" />
+                <ui:Label text="Player Name" class="col-name" style="width: 200px; font-size: 16px;" />
+                <ui:Label text="Game Mode" class="col-mode" style="font-size: 16px;" />
+                <ui:Label text="Exp" class="col-exp" style="width: 96px; font-size: 16px;" />
+            </ui:VisualElement>
+            <ui:ScrollView name="ScrollList" class="scroll-list" style="margin-bottom: 0;">
+                <ui:VisualElement class="row data-row">
+                    <ui:Label text="101" class="col-id" style="width: 44px; font-size: 15px;" />
+                    <ui:Label text="DragonSlayer" class="col-name" style="width: 203px; font-size: 15px;" />
+                    <ui:Label text="Survival" class="col-mode" style="font-size: 15px;" />
+                    <ui:Label text="99&#10;" class="col-exp" style="width: 96px; font-size: 15px;" />
+                </ui:VisualElement>
+            </ui:ScrollView>
+            <ui:Button text="X" name="btnClose" selectable="true" class="btn-close" style="height: 35px; width: 35px; position: absolute; right: 15px;" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

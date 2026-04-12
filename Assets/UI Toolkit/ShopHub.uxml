@@ -1,0 +1,21 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/ShopHub.uss?fileID=7433441132597879392&amp;guid=15ea5b3ffc62015408af965639e32c58&amp;type=3#ShopHub" />
+    <ui:VisualElement name="Container" class="container">
+        <ui:VisualElement name="ShopBox" class="shop-box" style="padding-top: 0; padding-right: 10px; padding-bottom: 0; padding-left: 10px; width: 500px; height: 400px;">
+            <ui:Button text="✕" name="btn-close" class="close-button" style="top: 3px;" />
+            <ui:VisualElement class="header-row" style="margin-bottom: 0; margin-top: 0; width: 429px;">
+                <ui:Label text="Shop" class="header-title" style="margin-top: 0; margin-bottom: 0;" />
+                <ui:Label text="Wallet: 0" name="lbl-wallet" class="wallet-label" style="margin-top: 0; margin-bottom: 1px;" />
+            </ui:VisualElement>
+            <ui:VisualElement name="tab-container" class="tab-container" style="margin-bottom: 0;">
+                <ui:Button text="Items" name="tab-item" class="tab-button active-tab" style="height: 30px;" />
+                <ui:Button text="Vehicles" name="tab-vehicle" class="tab-button" style="height: 30px;" />
+            </ui:VisualElement>
+            <ui:ListView name="lst-products" fixed-item-height="60" class="product-list" style="margin-bottom: 0;" />
+            <ui:VisualElement name="footer" class="footer-container">
+                <ui:Label name="lbl-status" class="status-label" style="margin-bottom: 4px;" />
+                <ui:Button text="BUY" name="btn-buy" class="buy-button" style="height: 30px; width: 148px; margin-left: auto; margin-right: auto;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
