@@ -1,0 +1,306 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Minecraft.Data;
+using Minecraft.Models;
+using Minecraft.Models.AccountModels;
+using Minecraft.Models.CreateRequest;
+using Minecraft.Models.ViewModels;
+using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Minecraft.Controllers
+{
+    public class PlayerManagerController : Controller
+    {
+        private readonly ILogger<PlayerManagerController> _logger;
+        private readonly ApplicationDbContext _context;
+        protected ResponseAPI _response;
+        private readonly IConfiguration _configuration;
+
+        public PlayerManagerController(ILogger<PlayerManagerController> logger, ApplicationDbContext context, IConfiguration configuration)
+        {
+            _logger = logger;
+            _context = context;
+            _configuration = configuration;
+            _response = new ResponseAPI();
+        }
+
+        /// <summary>
+        /// Display all players with their game modes
+        /// </summary>
+        public async Task<IActionResult> Index()
+        {
+            try
+            {
+                var players = await _context.Players.Include(p => p.GameMode).ToListAsync();
+                return View(players);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error loading players: {ex.Message}");
+                return View(new List<Player>());
+            }
+        }
+
+        /// <summary>
+        /// Display form to create a new player
+        /// </summary>
+        public async Task<IActionResult> Create()
+        {
+            try
+            {
+                // Load game modes for dropdown
+                ViewData["GameModes"] = await _context.GameModes.ToListAsync();
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error loading create form: {ex.Message}");
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        /// <summary>
+        /// Handle POST request to create a new player
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Email,Password,CharacterName,ModeID,ExperiencePoints,WalletBalance")] Player player)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // Validate unique email
+                    var existingPlayer = await _context.Players.FirstOrDefaultAsync(p => p.Email == player.Email);
+                    if (existingPlayer != null)
+                    {
+                        ModelState.AddModelError("Email", "Email đã tồn tại!");
+                        ViewData["GameModes"] = await _context.GameModes.ToListAsync();
+                        return View(player);
+                    }
+
+                    _context.Add(player);
+                    await _context.SaveChangesAsync();
+                    _logger.LogInformation($"Player created: {player.CharacterName}");
+
+                    TempData["SuccessMessage"] = $"✅ Người chơi '{player.CharacterName}' được tạo thành công!";
+                    return RedirectToAction(nameof(Index));
+                }
+
+                ViewData["GameModes"] = await _context.GameModes.ToListAsync();
+                return View(player);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error creating player: {ex.Message}");
+                ModelState.AddModelError(string.Empty, "Lỗi khi tạo người chơi!");
+                ViewData["GameModes"] = await _context.GameModes.ToListAsync();
+                return View(player);
+            }
+        }
+
+        /// <summary>
+        /// Display form to edit a player
+        /// </summary>
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var player = await _context.Players.Include(p => p.GameMode).FirstOrDefaultAsync(p => p.PlayerID == id);
+
+                if (player == null)
+                {
+                    return NotFound();
+                }
+
+                ViewData["GameModes"] = await _context.GameModes.ToListAsync();
+                return View(player);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error loading edit form: {ex.Message}");
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        /// <summary>
+        /// Handle POST request to update a player
+        /// </summary>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("PlayerID,Email,Password,CharacterName,ModeID,ExperiencePoints,WalletBalance")] Player player)
+        {
+            if (id != player.PlayerID)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    // Check if email is being changed and if new email already exists
+                    var existingPlayer = await _context.Players.FirstOrDefaultAsync(p => p.Email == player.Email && p.PlayerID != id);
+                    if (existingPlayer != null)
+                    {
+                        ModelState.AddModelError("Email", "Email đã được sử dụng bởi người chơi khác!");
+                        ViewData["GameModes"] = await _context.GameModes.ToListAsync();
+                        return View(player);
+                    }
+
+                    try
+                    {
+                        _context.Update(player);
+                        await _context.SaveChangesAsync();
+                        _logger.LogInformation($"Player updated: {player.CharacterName}");
+
+                        TempData["SuccessMessage"] = $"✅ Người chơi '{player.CharacterName}' được cập nhật thành công!";
+                        return RedirectToAction(nameof(Index));
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        if (!PlayerExists(player.PlayerID))
+                        {
+                            return NotFound();
+                        }
+                        throw;
+                    }
+                }
+
+                ViewData["GameModes"] = await _context.GameModes.ToListAsync();
+                return View(player);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error updating player: {ex.Message}");
+                ModelState.AddModelError(string.Empty, "Lỗi khi cập nhật người chơi!");
+                ViewData["GameModes"] = await _context.GameModes.ToListAsync();
+                return View(player);
+            }
+        }
+
+        /// <summary>
+        /// Display detailed information about a player
+        /// </summary>
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var player = await _context.Players
+                    .Include(p => p.GameMode)
+                    .Include(p => p.Purchases)
+                    .Include(p => p.MonsterKills)
+                    .Include(p => p.PlayerQuests)
+                    .FirstOrDefaultAsync(p => p.PlayerID == id);
+
+                if (player == null)
+                {
+                    return NotFound();
+                }
+
+                return View(player);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error loading player details: {ex.Message}");
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        /// <summary>
+        /// Display confirmation page before deleting a player
+        /// </summary>
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            try
+            {
+                var player = await _context.Players
+                    .Include(p => p.GameMode)
+                    .FirstOrDefaultAsync(p => p.PlayerID == id);
+
+                if (player == null)
+                {
+                    return NotFound();
+                }
+
+                return View(player);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error loading delete confirmation: {ex.Message}");
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        /// <summary>
+        /// Handle POST request to confirm player deletion
+        /// </summary>
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            try
+            {
+                var player = await _context.Players.FindAsync(id);
+
+                if (player == null)
+                {
+                    return NotFound();
+                }
+
+                // Delete related data first (if needed)
+                var purchases = await _context.Purchases.Where(p => p.PlayerID == id).ToListAsync();
+                var monsterKills = await _context.MonsterKills.Where(mk => mk.PlayerID == id).ToListAsync();
+                var playerQuests = await _context.PlayerQuests.Where(pq => pq.PlayerID == id).ToListAsync();
+
+                _context.Purchases.RemoveRange(purchases);
+                _context.MonsterKills.RemoveRange(monsterKills);
+                _context.PlayerQuests.RemoveRange(playerQuests);
+
+                _context.Players.Remove(player);
+                await _context.SaveChangesAsync();
+
+                _logger.LogInformation($"Player deleted: {player.CharacterName}");
+                TempData["SuccessMessage"] = $"✅ Người chơi '{player.CharacterName}' được xóa thành công!";
+
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error deleting player: {ex.Message}");
+                TempData["ErrorMessage"] = "❌ Lỗi khi xóa người chơi!";
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+        /// <summary>
+        /// Check if a player exists by ID
+        /// </summary>
+        private bool PlayerExists(int id)
+        {
+            return _context.Players.Any(e => e.PlayerID == id);
+        }
+    }
+}

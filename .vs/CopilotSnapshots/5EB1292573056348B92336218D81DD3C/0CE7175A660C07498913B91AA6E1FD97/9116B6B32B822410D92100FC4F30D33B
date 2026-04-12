@@ -1,0 +1,345 @@
+﻿@model Minecraft.Models.Player
+
+@{
+    ViewData["Title"] = "Chi Tiết Người Chơi";
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+
+<style>
+    :root {
+ --primary-color: #6366f1;
+     --primary-dark: #4f46e5;
+        --info-color: #0ea5e9;
+        --success-color: #10b981;
+        --danger-color: #ef4444;
+        --border-color: #e2e8f0;
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .detail-container {
+     background: white;
+     border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+   overflow: hidden;
+        max-width: 800px;
+   margin: 2rem auto;
+    }
+
+    .detail-header {
+  background: linear-gradient(135deg, var(--info-color) 0%, #0284c7 100%);
+        color: white;
+      padding: 2.5rem 2rem;
+        display: flex;
+  align-items: center;
+        gap: 2rem;
+    }
+
+    .detail-header-icon {
+     font-size: 4rem;
+    }
+
+    .detail-header-title {
+        margin: 0;
+        font-size: 2.5rem;
+   font-weight: 700;
+    }
+
+    .detail-header-subtitle {
+ margin: 0.5rem 0 0 0;
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .detail-content {
+        padding: 2rem;
+    }
+
+  .detail-row {
+        display: grid;
+     grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+     margin-bottom: 2rem;
+ padding-bottom: 2rem;
+border-bottom: 1px solid var(--border-color);
+    }
+
+    .detail-row:last-child {
+        border-bottom: none;
+    }
+
+    .detail-field {
+        display: flex;
+  flex-direction: column;
+    }
+
+    .detail-label {
+        font-weight: 600;
+      color: #666;
+     font-size: 0.875rem;
+   text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 0.5rem;
+    }
+
+    .detail-value {
+        font-size: 1.25rem;
+  font-weight: 600;
+      color: var(--primary-dark);
+      word-break: break-word;
+    }
+
+.badge {
+        display: inline-block;
+   padding: 0.5rem 0.875rem;
+        border-radius: 6px;
+     font-weight: 600;
+        font-size: 0.875rem;
+        width: fit-content;
+    }
+
+    .badge-survival {
+   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+    }
+
+    .badge-creative {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+  color: white;
+    }
+
+    .badge-adventure {
+background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        color: white;
+    }
+
+    .badge-default {
+  background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    }
+
+    .stats-grid {
+        display: grid;
+    grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+        background: #f8fafc;
+      padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+    }
+
+    .stat-card {
+        text-align: center;
+  padding: 1rem;
+ }
+
+ .stat-value {
+      font-size: 2rem;
+   font-weight: 700;
+        color: var(--primary-color);
+margin-bottom: 0.5rem;
+    }
+
+    .stat-label {
+  font-size: 0.875rem;
+        color: #666;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    }
+
+    .action-buttons {
+  display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+      padding-top: 2rem;
+   border-top: 1px solid var(--border-color);
+  }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+  border: none;
+        border-radius: 8px;
+     font-weight: 600;
+        font-size: 1rem;
+ cursor: pointer;
+    transition: var(--transition);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+flex: 1;
+    }
+
+  .btn-edit {
+        background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+   color: white;
+  }
+
+    .btn-edit:hover {
+        transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+    }
+
+    .btn-back {
+  background: #e5e7eb;
+   color: #333;
+    }
+
+    .btn-back:hover {
+    background: #d1d5db;
+    }
+
+    .btn-delete {
+ background: linear-gradient(135deg, var(--danger-color) 0%, #dc2626 100%);
+        color: white;
+    }
+
+    .btn-delete:hover {
+    transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .no-data {
+        color: #666;
+        text-align: center;
+        padding: 2rem;
+    }
+
+    @@media (max-width: 768px) {
+        .detail-header {
+flex-direction: column;
+    text-align: center;
+            padding: 2rem 1rem;
+        }
+
+    .detail-header-icon {
+      font-size: 3rem;
+        }
+
+   .detail-header-title {
+            font-size: 1.75rem;
+        }
+
+     .detail-content {
+    padding: 1.5rem;
+        }
+
+    .detail-row {
+          grid-template-columns: 1fr;
+    gap: 1.5rem;
+ }
+
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .action-buttons {
+   flex-direction: column;
+     }
+    }
+</style>
+
+<div class="detail-container">
+    <div class="detail-header">
+   <div class="detail-header-icon">⚔️</div>
+  <div>
+  <h1 class="detail-header-title">@Model.CharacterName</h1>
+    <p class="detail-header-subtitle">Chi tiết người chơi #@Model.PlayerID</p>
+  </div>
+    </div>
+
+    <div class="detail-content">
+     <!-- Player Stats -->
+      <div class="stats-grid">
+     <div class="stat-card">
+ <div class="stat-value">⭐ @Model.ExperiencePoints</div>
+          <div class="stat-label">Điểm Kinh Nghiệm</div>
+            </div>
+  <div class="stat-card">
+     <div class="stat-value">💰 @Model.WalletBalance</div>
+       <div class="stat-label">Số Dư Ví</div>
+    </div>
+        </div>
+
+      <!-- Basic Information -->
+    <div class="detail-row">
+          <div class="detail-field">
+       <span class="detail-label">📧 Email</span>
+       <span class="detail-value">@Model.Email</span>
+  </div>
+       <div class="detail-field">
+   <span class="detail-label">🎮 Chế Độ Chơi</span>
+     @if (Model.GameMode != null)
+{
+ <span class="badge badge-@(Model.GameMode.ModeName?.ToLower() ?? "default")">
+    @Model.GameMode.ModeName
+       </span>
+   }
+  else
+         {
+       <span class="badge badge-default">Chưa chọn</span>
+    }
+      </div>
+</div>
+
+        <!-- Related Data Sections -->
+    @if (Model.Purchases != null && Model.Purchases.Any())
+        {
+     <div class="detail-row">
+       <div class="detail-field">
+  <span class="detail-label">🛍️ Số Lần Mua Hàng</span>
+            <span class="detail-value">@Model.Purchases.Count</span>
+  </div>
+    </div>
+        }
+
+        @if (Model.MonsterKills != null && Model.MonsterKills.Any())
+        {
+     <div class="detail-row">
+<div class="detail-field">
+     <span class="detail-label">⚔️ Quái Vật Tiêu Diệt</span>
+      <span class="detail-value">@Model.MonsterKills.Count</span>
+    </div>
+      </div>
+        }
+
+      @if (Model.PlayerQuests != null && Model.PlayerQuests.Any())
+{
+ <div class="detail-row">
+             <div class="detail-field">
+         <span class="detail-label">📜 Nhiệm Vụ Đã Làm</span>
+        <span class="detail-value">@Model.PlayerQuests.Count</span>
+  </div>
+  </div>
+      }
+
+      <!-- Action Buttons -->
+<div class="action-buttons">
+         <a asp-action="Edit" asp-route-id="@Model.PlayerID" class="btn btn-edit">
+     <span>✏️</span>
+           Chỉnh Sửa
+      </a>
+         <a asp-action="Delete" asp-route-id="@Model.PlayerID" class="btn btn-delete" onclick="return confirm('Bạn có chắc chắn muốn xóa người chơi này không?');">
+      <span>🗑️</span>
+       Xóa
+ </a>
+     <a asp-action="Index" class="btn btn-back">
+       <span>⬅️</span>
+     Quay Lại
+          </a>
+     </div>
+    </div>
+</div>
+
+</body>
+</html>

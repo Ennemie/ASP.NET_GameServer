@@ -1,0 +1,639 @@
+﻿@model IEnumerable<Minecraft.Models.Player>
+
+@{
+    ViewData["Title"] = "Quản lý Người Chơi";
+}
+
+<style>
+    /* ===== ROOT & GENERAL STYLES ===== */
+    :root {
+        --primary-color: #6366f1;
+        --primary-dark: #4f46e5;
+        --primary-light: #818cf8;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+    --info-color: #0ea5e9;
+        --dark-bg: #0f172a;
+  --light-bg: #f8fafc;
+        --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+     --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+    body {
+   background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* ===== HEADER SECTION ===== */
+    .page-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        padding: 2.5rem 0;
+        margin-bottom: 2rem;
+        border-radius: 12px;
+        box-shadow: var(--shadow-xl);
+     position: relative;
+ overflow: hidden;
+    }
+
+    .page-header::before {
+  content: '';
+  position: absolute;
+        top: -50%;
+   right: -10%;
+  width: 400px;
+        height: 400px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    .page-header::after {
+      content: '';
+        position: absolute;
+        bottom: -25%;
+        left: -5%;
+        width: 300px;
+        height: 300px;
+    background: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+        animation: float 8s ease-in-out infinite reverse;
+    }
+
+    .header-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+justify-content: space-between;
+  align-items: center;
+        gap: 1.5rem;
+    }
+
+    .header-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: white;
+  margin: 0;
+  display: flex;
+        align-items: center;
+        gap: 0.75rem;
+   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-title-emoji {
+        font-size: 2.75rem;
+        animation: bounce 2s ease-in-out infinite;
+  }
+
+    /* ===== BUTTON STYLES ===== */
+    .btn-add-player {
+  background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%);
+      border: none;
+ color: white;
+        padding: 0.75rem 1.75rem;
+        border-radius: 8px;
+ font-weight: 600;
+    font-size: 1rem;
+        cursor: pointer;
+     transition: var(--transition);
+        box-shadow: var(--shadow-md);
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        white-space: nowrap;
+    }
+
+    .btn-add-player:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+background: linear-gradient(135deg, #059669 0%, #047857 100%);
+    }
+
+    .btn-add-player:active {
+        transform: translateY(0);
+    }
+
+    /* ===== TABLE CONTAINER ===== */
+    .table-container {
+        background: white;
+        border-radius: 12px;
+    box-shadow: var(--shadow-md);
+        overflow: hidden;
+border: 1px solid var(--border-color);
+        animation: slideUp 0.5s ease-out;
+    }
+
+    .table-responsive-custom {
+        max-width: 100%;
+        overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+    }
+
+    .table-responsive-custom::-webkit-scrollbar {
+        height: 6px;
+    }
+
+    .table-responsive-custom::-webkit-scrollbar-track {
+        background: var(--light-bg);
+  }
+
+    .table-responsive-custom::-webkit-scrollbar-thumb {
+        background: var(--primary-light);
+        border-radius: 3px;
+    }
+
+    .table-responsive-custom::-webkit-scrollbar-thumb:hover {
+        background: var(--primary-color);
+ }
+
+    /* ===== TABLE STYLES ===== */
+  .table {
+        margin: 0;
+    }
+
+    .table thead {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        font-weight: 600;
+        text-transform: uppercase;
+    font-size: 0.85rem;
+      letter-spacing: 0.5px;
+        color: white;
+    }
+
+    .table thead th {
+        border: none;
+        padding: 1.25rem;
+        vertical-align: middle;
+    }
+
+    .table tbody tr {
+        border-bottom: 1px solid var(--border-color);
+        transition: var(--transition);
+        animation: fadeIn 0.5s ease-out forwards;
+  }
+
+    .table tbody tr:nth-child(odd) {
+        background-color: rgba(99, 102, 241, 0.02);
+    }
+
+    .table tbody tr:hover {
+      background-color: rgba(99, 102, 241, 0.08);
+        box-shadow: inset 4px 0 0 var(--primary-color);
+    }
+
+    .table tbody td {
+      padding: 1.25rem;
+        vertical-align: middle;
+        border: none;
+    }
+
+    .table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    /* ===== TABLE DATA STYLING ===== */
+    .player-id {
+        font-weight: 600;
+        color: var(--primary-color);
+  font-size: 0.95rem;
+    }
+
+    .character-name {
+        font-weight: 700;
+        color: var(--primary-dark);
+ font-size: 1.05rem;
+        display: flex;
+        align-items: center;
+  gap: 0.5rem;
+ }
+
+    .character-name::before {
+        content: '⚔️';
+    }
+
+    .player-email {
+color: #64748b;
+   font-size: 0.95rem;
+    word-break: break-word;
+    }
+
+    .player-password {
+ font-family: 'Courier New', monospace;
+    color: #94a3b8;
+        font-size: 0.9rem;
+        letter-spacing: 1px;
+    }
+
+    .stat-value {
+        font-weight: 600;
+     color: var(--primary-color);
+        font-size: 1.05rem;
+    }
+
+    .stat-xp {
+        color: #f59e0b;
+    }
+
+    .stat-balance {
+        color: #10b981;
+    }
+
+    /* ===== BADGE STYLES ===== */
+    .game-mode-badge {
+        display: inline-block;
+        padding: 0.5rem 0.875rem;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.875rem;
+    letter-spacing: 0.3px;
+        white-space: nowrap;
+    }
+
+    .badge-survival {
+        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+        color: white;
+    }
+
+    .badge-creative {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+   color: white;
+    }
+
+.badge-adventure {
+        background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+        color: white;
+    }
+
+    .badge-unknown {
+        background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+        color: white;
+    }
+
+    /* ===== ACTION COLUMN STYLES ===== */
+    .action-column {
+        white-space: nowrap;
+        width: 1%;
+    }
+
+    .btn-group-custom {
+        display: flex;
+  gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    .btn-action {
+        padding: 0.5rem 0.875rem;
+        border-radius: 6px;
+        font-weight: 600;
+font-size: 0.85rem;
+        border: none;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+display: inline-flex;
+      align-items: center;
+     gap: 0.25rem;
+   position: relative;
+        overflow: hidden;
+    }
+
+    .btn-action::before {
+        content: '';
+     position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+ background: rgba(255, 255, 255, 0.3);
+        transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+
+    .btn-action:hover::before {
+        width: 300px;
+     height: 300px;
+    }
+
+    .btn-edit {
+        background: linear-gradient(135deg, var(--warning-color) 0%, #d97706 100%);
+        color: white;
+    }
+
+    .btn-edit:hover {
+        transform: translateY(-2px);
+     box-shadow: var(--shadow-lg);
+    }
+
+    .btn-details {
+        background: linear-gradient(135deg, var(--info-color) 0%, #0284c7 100%);
+        color: white;
+    }
+
+    .btn-details:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .btn-delete {
+        background: linear-gradient(135deg, var(--danger-color) 0%, #dc2626 100%);
+        color: white;
+    }
+
+    .btn-delete:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+    }
+
+    .btn-action:active {
+        transform: translateY(0);
+    }
+
+    /* ===== EMPTY STATE ===== */
+    .empty-state {
+     padding: 4rem 1.5rem;
+        text-align: center;
+    }
+
+    .empty-state-icon {
+  font-size: 4rem;
+margin-bottom: 1rem;
+        opacity: 0.5;
+    }
+
+    .empty-state-text {
+ color: #64748b;
+        font-size: 1.1rem;
+   margin-bottom: 1.5rem;
+    }
+
+    .empty-state-action {
+     animation: fadeIn 0.5s ease-out;
+    }
+
+    /* ===== ANIMATIONS ===== */
+ @keyframes float {
+  0%, 100% {
+      transform: translateY(0px);
+        }
+        50% {
+            transform: translateY(-20px);
+        }
+    }
+
+    @keyframes bounce {
+        0%, 100% {
+         transform: translateY(0);
+        }
+        50% {
+ transform: translateY(-10px);
+   }
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+      transform: translateY(20px);
+        }
+        to {
+    opacity: 1;
+     transform: translateY(0);
+        }
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+        }
+  to {
+      opacity: 1;
+     }
+    }
+
+    /* ===== RESPONSIVE DESIGN ===== */
+    @media (max-width: 1024px) {
+        .header-title {
+            font-size: 2rem;
+    }
+
+        .table thead th {
+          padding: 1rem;
+       font-size: 0.8rem;
+        }
+
+        .table tbody td {
+      padding: 0.875rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .header-content {
+            flex-direction: column;
+align-items: stretch;
+        }
+
+.header-title {
+      font-size: 1.75rem;
+       justify-content: center;
+     }
+
+        .btn-add-player {
+         width: 100%;
+          justify-content: center;
+        }
+
+        .page-header {
+   padding: 2rem 1rem;
+     margin-bottom: 1.5rem;
+  }
+
+        .table thead {
+            font-size: 0.75rem;
+        }
+
+        .table thead th {
+    padding: 0.875rem 0.5rem;
+      }
+
+        .table tbody td {
+ padding: 0.75rem 0.5rem;
+font-size: 0.9rem;
+    }
+
+ .character-name {
+  font-size: 1rem;
+   }
+
+        .btn-group-custom {
+         flex-direction: column;
+       gap: 0.35rem;
+        }
+
+   .btn-action {
+            width: 100%;
+     justify-content: center;
+          font-size: 0.8rem;
+     padding: 0.45rem 0.65rem;
+   }
+
+ .player-password {
+            font-size: 0.8rem;
+   letter-spacing: 0.5px;
+     }
+
+        .stat-value {
+ font-size: 0.95rem;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .header-title {
+            font-size: 1.5rem;
+        }
+
+        .header-title-emoji {
+      font-size: 2rem;
+        }
+
+        .table thead th {
+            padding: 0.75rem 0.35rem;
+   font-size: 0.7rem;
+        }
+
+        .table tbody td {
+     padding: 0.65rem 0.35rem;
+   font-size: 0.8rem;
+        }
+
+ .player-id {
+    font-size: 0.85rem;
+    }
+
+        .character-name {
+    font-size: 0.9rem;
+        }
+
+    .character-name::before {
+   content: '';
+        display: none;
+}
+
+        .player-email {
+            font-size: 0.8rem;
+      }
+
+    .stat-value {
+            font-size: 0.9rem;
+        }
+
+        .game-mode-badge {
+  padding: 0.35rem 0.65rem;
+   font-size: 0.75rem;
+        }
+
+        .btn-action {
+            padding: 0.4rem 0.5rem;
+            font-size: 0.7rem;
+            gap: 0.15rem;
+    }
+    }
+</style>
+
+<div class="container-fluid mt-5">
+    <!-- PAGE HEADER -->
+    <div class="page-header">
+        <div class="container">
+       <div class="header-content">
+      <h1 class="header-title">
+  <span class="header-title-emoji">👮</span>
+    Quản Lý Người Chơi
+  </h1>
+    <a asp-action="Create" class="btn-add-player">
+               <span>+</span>
+           Thêm Người Chơi
+    </a>
+     </div>
+        </div>
+    </div>
+
+    <div class="container">
+      <!-- TABLE SECTION -->
+        <div class="table-container">
+     <div class="table-responsive-custom">
+             <table class="table">
+  <thead>
+      <tr>
+    <th>ID</th>
+       <th>Tên nhân vật</th>
+               <th>Email</th>
+        <th>Password</th>
+         <th><span style="color: #fbbf24;">⭐</span> XP</th>
+     <th><span style="color: #86efac;">💰</span> Ví</th>
+            <th>Chế độ chơi</th>
+   <th class="text-center">Thao tác</th>
+ </tr>
+  </thead>
+      <tbody>
+   @if (Model != null && Model.Any())
+           {
+           int index = 0;
+           foreach (var item in Model)
+ {
+     index++;
+          <tr style="animation-delay: @((index * 50) + "ms");">
+           <td class="player-id">@item.PlayerID</td>
+      <td class="character-name">@item.CharacterName</td>
+   <td class="player-email">@item.Email</td>
+      <td class="player-password">@item.Password</td>
+   <td class="stat-value stat-xp">@item.ExperiencePoints</td>
+         <td class="stat-value stat-balance">@item.WalletBalance</td>
+     <td>
+     @if (item.GameMode != null)
+         {
+       string gameModeClass = item.GameMode.ModeName?.ToLower() switch
+        {
+       "survival" => "badge-survival",
+      "creative" => "badge-creative",
+      "adventure" => "badge-adventure",
+    _ => "badge-unknown"
+          };
+        <span class="game-mode-badge @gameModeClass">@item.GameMode.ModeName</span>
+        }
+        else
+                {
+  <span class="game-mode-badge badge-unknown">Chưa chọn</span>
+      }
+            </td>
+          <td class="action-column">
+   <div class="btn-group-custom">
+         <a asp-action="Edit" asp-route-id="@item.PlayerID" class="btn-action btn-edit">✏️ Sửa</a>
+                   <a asp-action="Details" asp-route-id="@item.PlayerID" class="btn-action btn-details">👁️ Chi tiết</a>
+           <a asp-action="Delete" asp-route-id="@item.PlayerID" class="btn-action btn-delete">🗑️ Xóa</a>
+</div>
+            </td>
+           </tr>
+  }
+   }
+          else
+             {
+ <tr>
+  <td colspan="8" class="empty-state">
+           <div class="empty-state-icon">🎮</div>
+         <h5 class="empty-state-text">Chưa có dữ liệu người chơi nào.</h5>
+       <a asp-action="Create" class="btn-add-player empty-state-action">
+        <span>+</span>
+           Tạo người chơi đầu tiên
+       </a>
+          </td>
+ </tr>
+           }
+      </tbody>
+   </table>
+   </div>
+        </div>
+    </div>
+</div>

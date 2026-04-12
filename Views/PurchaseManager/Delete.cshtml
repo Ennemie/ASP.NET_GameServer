@@ -1,0 +1,277 @@
+﻿@model Minecraft.Models.Purchase
+
+@{
+    ViewData["Title"] = "Xóa Giao Dịch Mua Hàng";
+    Layout = "_Layout";
+}
+
+<style>
+    :root {
+        --primary-color: #6366f1;
+        --primary-dark: #4f46e5;
+        --danger-color: #ef4444;
+        --dark-danger: #dc2626;
+        --border-color: #e2e8f0;
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .delete-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: var(--shadow-lg);
+        overflow: hidden;
+        max-width: 600px;
+        margin: 2rem auto;
+    }
+
+    .delete-header {
+        background: linear-gradient(135deg, var(--danger-color) 0%, var(--dark-danger) 100%);
+        color: white;
+        padding: 2.5rem 2rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+
+    .delete-header-icon {
+        font-size: 3rem;
+    }
+
+    .delete-header-content {
+        margin: 0;
+    }
+
+    .delete-header-title {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .delete-header-subtitle {
+        margin: 0.5rem 0 0 0;
+        font-size: 1rem;
+        opacity: 0.9;
+    }
+
+    .delete-content {
+        padding: 2.5rem 2rem;
+    }
+
+    .warning-message {
+        background: #fee2e2;
+        border: 2px solid var(--danger-color);
+        color: #991b1b;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+
+    .warning-icon {
+        font-size: 1.5rem;
+        flex-shrink: 0;
+    }
+
+    .warning-text {
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    .purchase-info {
+        background: #f8fafc;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+    }
+
+    .purchase-info-item {
+        display: grid;
+        grid-template-columns: 150px 1fr;
+        gap: 1rem;
+        margin-bottom: 1rem;
+    }
+
+        .purchase-info-item:last-child {
+            margin-bottom: 0;
+        }
+
+    .info-label {
+        font-weight: 600;
+        color: #666;
+        text-transform: uppercase;
+        font-size: 0.875rem;
+        letter-spacing: 0.5px;
+    }
+
+    .info-value {
+        color: var(--primary-dark);
+        font-weight: 600;
+        word-break: break-word;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        flex: 1;
+    }
+
+    .btn-delete-confirm {
+        background: linear-gradient(135deg, var(--danger-color) 0%, var(--dark-danger) 100%);
+        color: white;
+    }
+
+        .btn-delete-confirm:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-delete-confirm:active {
+            transform: translateY(0);
+        }
+
+    .btn-cancel {
+        background: #e5e7eb;
+        color: #333;
+    }
+
+        .btn-cancel:hover {
+            background: #d1d5db;
+        }
+
+    .confirmation-note {
+        font-size: 0.875rem;
+        color: #666;
+        text-align: center;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border-color);
+    }
+
+    @@media (max-width: 768px) {
+        .delete-container {
+            margin: 1rem;
+        }
+
+        .delete-header {
+            flex-direction: column;
+            text-align: center;
+            padding: 2rem 1rem;
+        }
+
+        .delete-header-icon {
+            font-size: 2.5rem;
+        }
+
+        .delete-header-title {
+            font-size: 1.5rem;
+        }
+
+        .delete-content {
+            padding: 1.5rem;
+        }
+
+        .purchase-info-item {
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .warning-message {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .warning-text {
+            text-align: center;
+        }
+    }
+</style>
+
+<div class="delete-container">
+    <div class="delete-header">
+        <div class="delete-header-icon">⚠️</div>
+        <div class="delete-header-content">
+            <h1 class="delete-header-title">Xóa Giao Dịch Mua Hàng</h1>
+            <p class="delete-header-subtitle">Thao tác này không thể hoàn tác</p>
+        </div>
+    </div>
+
+    <div class="delete-content">
+        <div class="warning-message">
+            <div class="warning-icon">❌</div>
+            <p class="warning-text">
+                <strong>Cảnh báo!</strong> Bạn sắp xóa vĩnh viễn giao dịch mua hàng này khỏi hệ thống.
+                Thao tác này không thể hoàn tác.
+            </p>
+        </div>
+
+        <div class="purchase-info">
+            <h3 style="margin-top: 0; color: #333; border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 15px;">Thông Tin Giao Dịch</h3>
+
+            <div class="purchase-info-item">
+                <span class="info-label">👤 Người Chơi</span>
+                <span class="info-value">@Model.Player.CharacterName</span>
+            </div>
+
+            <div class="purchase-info-item">
+                <span class="info-label">📦 Vật Phẩm</span>
+                <span class="info-value">@(Model.ItemID.HasValue? Model.Item?.ItemName : "Không có")</span>
+            </div>
+
+            <div class="purchase-info-item">
+                <span class="info-label">🚗 Phương Tiện</span>
+                <span class="info-value">@(Model.VehicleID.HasValue? Model.Vehicle?.VehicleName : "Không có")</span>
+            </div>
+
+            <div class="purchase-info-item">
+                <span class="info-label">🔢 Số Lượng</span>
+                <span class="info-value">@Model.Amount</span>
+            </div>
+
+            <div class="purchase-info-item">
+                <span class="info-label">📅 Ngày Mua</span>
+                <span class="info-value">@Model.PurchaseDate.ToString("dd/MM/yyyy HH:mm:ss")</span>
+            </div>
+        </div>
+
+        <form asp-action="DeleteConfirmed" method="post">
+            <input type="hidden" asp-for="PurchaseID" />
+
+            <div class="action-buttons">
+                <button type="submit" class="btn btn-delete-confirm" onclick="return confirm('Bạn chắc chắn muốn XÓA giao dịch này không? Thao tác này không thể hoàn tác!');">
+                    <span>🗑️</span> Xóa Vĩnh Viễn
+                </button>
+
+                <a asp-action="Index" class="btn btn-cancel">
+                    <span>❌</span> Hủy
+                </a>
+            </div>
+
+            <p class="confirmation-note">
+                Nhấn "Xóa Vĩnh Viễn" để xác nhận xóa giao dịch này
+            </p>
+        </form>
+    </div>
+</div>

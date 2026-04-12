@@ -1,0 +1,219 @@
+﻿@model Minecraft.Models.Item
+
+@{
+    ViewData["Title"] = "Tạo Vật Phẩm Mới";
+    Layout = "_Layout";
+}
+
+<style>
+    :root {
+        --primary-color: #6366f1;
+        --primary-dark: #4f46e5;
+        --success-color: #10b981;
+        --danger-color: #ef4444;
+        --border-color: #e2e8f0;
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .form-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: var(--shadow-md);
+        padding: 2rem;
+        max-width: 600px;
+        margin: 2rem auto;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 12px 12px 0 0;
+        margin: -2rem -2rem 2rem -2rem;
+    }
+
+        .form-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+            .form-group input:focus,
+            .form-group textarea:focus {
+                outline: none;
+                border-color: var(--primary-color);
+                box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .form-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, var(--success-color) 0%, #059669 100%);
+        color: white;
+        flex: 1;
+    }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+    .btn-cancel {
+        background: #e5e7eb;
+        color: #333;
+        flex: 1;
+    }
+
+        .btn-cancel:hover {
+            background: #d1d5db;
+        }
+
+    .field-validation-error {
+        color: var(--danger-color);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .validation-summary-errors {
+        background: #fee2e2;
+        border: 1px solid #fca5a5;
+        color: #991b1b;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    @@media (max-width: 768px) {
+        .form-container {
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .form-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>🆕 Tạo Vật Phẩm Mới</h1>
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="validation-summary-errors">
+            <h4>❌ Vui lòng kiểm tra các lỗi dưới đây:</h4>
+            <ul>
+                @foreach (var modelState in ViewData.ModelState.Values)
+                {
+                    @foreach (var error in modelState.Errors)
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                }
+            </ul>
+        </div>
+    }
+
+    <form asp-action="Create" method="post">
+        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label asp-for="ItemName">Tên Vật Phẩm:</label>
+                <input asp-for="ItemName" type="text" placeholder="Nhập tên vật phẩm..." required />
+                <span asp-validation-for="ItemName" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ItemType">Loại Vật Phẩm:</label>
+                <input asp-for="ItemType" type="text" placeholder="Nhập loại vật phẩm..." required />
+                <span asp-validation-for="ItemType" class="field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="ImageURL">URL Hình Ảnh:</label>
+            <input asp-for="ImageURL" type="text" placeholder="Nhập URL hình ảnh..." />
+            <span asp-validation-for="ImageURL" class="field-validation-error"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Price">Giá:</label>
+            <input asp-for="Price" type="number" value="0" min="0" />
+            <span asp-validation-for="Price" class="field-validation-error"></span>
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit" class="btn btn-submit">
+                <span>✅</span> Tạo Vật Phẩm
+            </button>
+            <a asp-action="Index" class="btn btn-cancel">
+                <span>❌</span> Hủy
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

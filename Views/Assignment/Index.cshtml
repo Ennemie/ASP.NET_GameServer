@@ -1,0 +1,193 @@
+﻿@{
+    ViewData["Title"] = "Assignment Dashboard";
+    Layout = "_Layout";
+}
+
+<style>
+    .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+    }
+    .result-box {
+        background: #1e293b;
+        color: #a5f3fc;
+        padding: 15px;
+        border-radius: 8px;
+        min-height: 200px;
+        height: 600px;
+        overflow-y: auto;
+        font-family: 'Courier New', monospace;
+    }
+    .btn-action { width: 100%; text-align: left; margin-bottom: 10px; }
+</style>
+
+<div class="container-fluid mt-4">
+    <h1 class="text-center text-primary mb-5">🎮 Minecraft API Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-5">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">⚙️ Chức Năng</h5>
+                </div>
+                <div class="card-body">
+                    <div class="accordion" id="accordionAPI">
+
+                        <button class="btn btn-outline-primary btn-action" onclick="callApi('/Assignment/GetAllResources')">
+                            1. 📦 Tất cả tài nguyên (Items và Vehicles)
+                        </button>
+
+                        <div class="input-group mb-2">
+                            <button class="btn btn-outline-info" onclick="callApi('/Assignment/GetPlayersByMode?modeName=' + document.getElementById('inpMode').value)">
+                                2. 🔍 Tìm Player theo Mode
+                            </button>
+                            <select id="inpMode" class="form-select">
+                                <option value="Survival">Survival</option>
+                                <option value="Creative">Creative</option>
+                                <option value="Adventure">Adventure</option>
+                            </select>
+                        </div>
+
+                        <button class="btn btn-outline-danger btn-action" onclick="callApi('/Assignment/GetHighValueItemsVehicles')">
+                            3. 📦 Items và Vehicles có giá > 100
+                        </button>
+
+                        <div class="input-group mb-2">
+                            <button class="btn btn-outline-success" onclick="callApi('/Assignment/GetAffordableItems?playerId=' + document.getElementById('inpPlayerId_4').value)">
+                                4. 💰 Item mua được, tìm theo Player ID:
+                            </button>
+                            <input type="number" id="inpPlayerId_4" class="form-control" placeholder="Player ID">
+                        </div>
+
+                        <button class="btn btn-outline-info btn-action" onclick="callApi('/Assignment/GetCheapDiamondItems')">
+                            5. 💎 Kim cương giá rẻ (< 500)
+                        </button>
+
+                        <div class="input-group mb-2">
+                            <button class="btn btn-outline-warning" onclick="callApi('/Assignment/GetPlayerHistory?playerId=' + document.getElementById('inpPlayerId_6').value)">
+                                6. 📜 Lịch sử giao dịch, tìm theo Player ID:
+                            </button>
+                            <input type="number" id="inpPlayerId_6" class="form-control" placeholder="Player ID">
+                        </div>
+
+                        <div class="card mb-2 p-2 border-success">
+                            <h6 class="text-success">7. Thêm Item Mới</h6>
+                            <input type="text" id="newItemName" class="form-control mb-1" placeholder="Tên Item">
+                            <input type="text" id="newItemType" class="form-control mb-1" placeholder="Loại (vd: Weapon)">
+                            <input type="text" id="newImageUrl" class="form-control mb-1" placeholder="Image Url">
+                            <input type="number" id="newItemPrice" class="form-control mb-1" placeholder="Giá">
+                            <button class="btn btn-success w-100" onclick="createItem()">💾 Lưu Item</button>
+                        </div>
+
+                        <div class="input-group mb-2">
+                            <button class="btn btn-outline-dark" onclick="updatePassword()">
+                                8. 🔑 Đổi Pass, tìm theo Player ID:
+                            </button>
+                            <input type="number" id="inpPlayerId_8" class="form-control" placeholder="ID">
+                            <input type="text" id="inpNewPass" class="form-control" placeholder="Pass mới">
+                        </div>
+
+                        <button class="btn btn-outline-secondary btn-action" onclick="callApi('/Assignment/GetTopSellingItems')">
+                            9. 🔥 Top Item, Vehicle bán chạy
+                        </button>
+
+                        <button class="btn btn-outline-primary btn-action" onclick="callApi('/Assignment/GetPlayerPurchaseStats')">
+                            10. 📊 Thống kê mua hàng Player
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-7">
+            <div class="card shadow-lg h-100">
+                <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">📟 Kết Quả JSON</h5>
+                    <button class="btn btn-sm btn-light" onclick="document.getElementById('resultArea').innerHTML='...'">Xóa</button>
+                </div>
+                <div class="card-body bg-dark">
+                    <pre id="resultArea" class="result-box">Vui lòng chọn chức năng bên trái...</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Hàm gọi API GET chung
+    async function callApi(url) {
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = "⏳ Đang tải...";
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(await response.text());
+            const data = await response.json();
+
+            // Format JSON đẹp
+            resultArea.innerHTML = JSON.stringify(data, null, 4);
+        } catch (error) {
+            resultArea.innerHTML = `❌ Lỗi: ${error}`;
+        }
+    }
+
+    // Hàm chức năng 7: POST tạo item
+    async function createItem() {
+        const name = document.getElementById('newItemName').value;
+        const type = document.getElementById('newItemType').value;
+        const imageUrl = document.getElementById('newImageUrl').value;
+        const price = document.getElementById('newItemPrice').value;
+
+        if(!name || !price) { alert("Thiếu thông tin!"); return; }
+
+        const payload = {
+            ItemName: name,
+            ItemType: type,
+            Price: parseFloat(price),
+            ImageURL: imageUrl || ""
+        };
+
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = "⏳ Đang gửi dữ liệu...";
+
+        try {
+            const response = await fetch('/Assignment/CreateItem', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            const data = await response.json();
+            resultArea.innerHTML = JSON.stringify(data, null, 4);
+        } catch (error) {
+            resultArea.innerHTML = `❌ Lỗi: ${error}`;
+        }
+    }
+
+    // Hàm chức năng 8: POST đổi pass
+    async function updatePassword() {
+        const id = document.getElementById('inpPlayerId_8').value;
+        const pass = document.getElementById('inpNewPass').value;
+
+        if(!id || !pass) { alert("Nhập ID và Pass mới!"); return; }
+
+        const formData = new FormData();
+        formData.append('playerId', id);
+        formData.append('newPassword', pass);
+
+        const resultArea = document.getElementById('resultArea');
+        resultArea.innerHTML = "⏳ Đang cập nhật...";
+
+        try {
+            const response = await fetch('/Assignment/UpdatePassword', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            resultArea.innerHTML = JSON.stringify(data, null, 4);
+        } catch (error) {
+            resultArea.innerHTML = `❌ Lỗi: ${error}`;
+        }
+    }
+</script>

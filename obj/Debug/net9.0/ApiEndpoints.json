@@ -1,0 +1,372 @@
+[
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "DeleteItem",
+    "RelativePath": "DeleteItem/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "DeleteMonster",
+    "RelativePath": "DeleteMonster/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "DeletePlayer",
+    "RelativePath": "DeletePlayer/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "DeleteVehicle",
+    "RelativePath": "DeleteVehicle/{id}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "GetAllGameMode",
+    "RelativePath": "GetAllGameMode",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "GetAllItem",
+    "RelativePath": "GetAllItem",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "GetAllLevelResult",
+    "RelativePath": "GetAllLevelResult",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "GetAllMonster",
+    "RelativePath": "GetAllMonster",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "GetAllMonsterKill",
+    "RelativePath": "GetAllMonsterKill",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "GetAllPlayer",
+    "RelativePath": "GetAllPlayer",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "GetAllPlayerQuest",
+    "RelativePath": "GetAllPlayerQuest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "GetAllPurchase",
+    "RelativePath": "GetAllPurchase",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "GetAllQuest",
+    "RelativePath": "GetAllQuest",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "GetAllVehicle",
+    "RelativePath": "GetAllVehicle",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "GetItemVehicleList",
+    "RelativePath": "GetItemVehicleList",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "LoginRequest",
+    "RelativePath": "LoginRequest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Minecraft.Models.AccountModels.LoginModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "AddItem",
+    "RelativePath": "PostItem",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Minecraft.Models.CreateRequest.CreateItemRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "AddMonster",
+    "RelativePath": "PostMonster",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Minecraft.Models.CreateRequest.CreateMonsterRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "AddPlayer",
+    "RelativePath": "PostPlayer",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Minecraft.Models.CreateRequest.CreatePlayerRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "PostPurchase",
+    "RelativePath": "PostPurchase",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Minecraft.Models.CreateRequest.CreatePurchaseRequest\u002BPurchaseRequestDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "AddVehicle",
+    "RelativePath": "PostVehicle",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Minecraft.Models.CreateRequest.CreateVehicleRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "RegisterRequest",
+    "RelativePath": "RegisterRequest",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "req",
+        "Type": "Minecraft.Models.AccountModels.RegisterModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "UpdateItem",
+    "RelativePath": "UpdateItem/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateItem",
+        "Type": "Minecraft.Models.Item",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "UpdateMonster",
+    "RelativePath": "UpdateMonster/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateMonster",
+        "Type": "Minecraft.Models.Monster",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "UpdatePlayer",
+    "RelativePath": "UpdateUser/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updatePlayer",
+        "Type": "Minecraft.Models.Player",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Minecraft.Controllers.HomeController",
+    "Method": "UpdateVehicle",
+    "RelativePath": "UpdateVehicle/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "updateVehicle",
+        "Type": "Minecraft.Models.Vehicle",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

@@ -1,0 +1,244 @@
+﻿@model Minecraft.Models.Purchase
+
+@{
+    ViewData["Title"] = "Chỉnh Sửa Giao Dịch Mua Hàng";
+    Layout = "_Layout";
+}
+
+<style>
+    :root {
+        --primary-color: #6366f1;
+        --primary-dark: #4f46e5;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+        --border-color: #e2e8f0;
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .form-container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: var(--shadow-md);
+        padding: 2rem;
+        max-width: 700px;
+        margin: 2rem auto;
+    }
+
+    .form-header {
+        background: linear-gradient(135deg, var(--warning-color) 0%, #d97706 100%);
+        color: white;
+        padding: 2rem;
+        border-radius: 12px 12px 0 0;
+        margin: -2rem -2rem 2rem -2rem;
+    }
+
+        .form-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+            .form-group input:focus,
+            .form-group select:focus {
+                outline: none;
+                border-color: var(--warning-color);
+                box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+            }
+
+    .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+    }
+
+    .form-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-top: 2rem;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+
+    .btn-submit {
+        background: linear-gradient(135deg, var(--warning-color) 0%, #d97706 100%);
+        color: white;
+        flex: 1;
+    }
+
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+    .btn-cancel {
+        background: #e5e7eb;
+        color: #333;
+        flex: 1;
+    }
+
+        .btn-cancel:hover {
+            background: #d1d5db;
+        }
+
+    .field-validation-error {
+        color: var(--danger-color);
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+    }
+
+    .validation-summary-errors {
+        background: #fee2e2;
+        border: 1px solid #fca5a5;
+        color: #991b1b;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+    }
+
+    .info-text {
+        background: #e0f2fe;
+        border: 1px solid #0ea5e9;
+        color: #0369a1;
+        padding: 0.75rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+    }
+
+    @@media (max-width: 768px) {
+        .form-container {
+            margin: 1rem;
+            padding: 1.5rem;
+        }
+
+        .form-row {
+            grid-template-columns: 1fr;
+        }
+
+        .form-buttons {
+            flex-direction: column;
+        }
+    }
+</style>
+
+<div class="form-container">
+    <div class="form-header">
+        <h1>✏️ Chỉnh Sửa Giao Dịch Mua Hàng</h1>
+    </div>
+
+    <div class="info-text">
+        ℹ️ Chọn ít nhất một vật phẩm hoặc phương tiện.
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div class="validation-summary-errors">
+            <h4>❌ Vui lòng kiểm tra các lỗi dưới đây:</h4>
+            <ul>
+                @foreach (var modelState in ViewData.ModelState.Values)
+                {
+                    @foreach (var error in modelState.Errors)
+                    {
+                        <li>@error.ErrorMessage</li>
+                    }
+                }
+            </ul>
+        </div>
+    }
+
+    <form asp-action="Edit" method="post">
+        <div asp-validation-summary="ModelOnly" class="validation-summary-errors"></div>
+
+        <input type="hidden" asp-for="PurchaseID" />
+
+        <div class="form-group">
+            <label asp-for="PlayerID">Người Chơi:</label>
+            <select asp-for="PlayerID" asp-items="@(new SelectList(ViewData["Players"] as List<Minecraft.Models.Player>, "PlayerID", "CharacterName"))" required>
+                <option value="">-- Chọn Người Chơi --</option>
+            </select>
+            <span asp-validation-for="PlayerID" class="field-validation-error"></span>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label asp-for="ItemID">Vật Phẩm (Tùy Chọn):</label>
+                <select asp-for="ItemID" asp-items="@(new SelectList(ViewData["Items"] as List<Minecraft.Models.Item>, "ItemID", "ItemName"))">
+                    <option value="">-- Không Chọn --</option>
+                </select>
+                <span asp-validation-for="ItemID" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="VehicleID">Phương Tiện (Tùy Chọn):</label>
+                <select asp-for="VehicleID" asp-items="@(new SelectList(ViewData["Vehicles"] as List<Minecraft.Models.Vehicle>, "VehicleID", "VehicleName"))">
+                    <option value="">-- Không Chọn --</option>
+                </select>
+                <span asp-validation-for="VehicleID" class="field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label asp-for="Amount">Số Lượng:</label>
+                <input asp-for="Amount" type="number" min="1" required />
+                <span asp-validation-for="Amount" class="field-validation-error"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="PurchaseDate">Ngày Mua:</label>
+                <input asp-for="PurchaseDate" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" />
+                <span asp-validation-for="PurchaseDate" class="field-validation-error"></span>
+            </div>
+        </div>
+
+        <div class="form-buttons">
+            <button type="submit" class="btn btn-submit">
+                <span>💾</span> Lưu Thay Đổi
+            </button>
+            <a asp-action="Index" class="btn btn-cancel">
+                <span>❌</span> Hủy
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

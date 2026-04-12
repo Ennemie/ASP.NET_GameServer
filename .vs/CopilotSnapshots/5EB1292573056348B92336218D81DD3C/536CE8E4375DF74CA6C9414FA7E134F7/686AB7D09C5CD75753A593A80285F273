@@ -1,0 +1,41 @@
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Razor.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using Minecraft.Data;
+using Minecraft.Models;
+using Minecraft.Models.AccountModels;
+using Minecraft.Models.CreateRequest;
+using Minecraft.Models.ViewModels;
+using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
+namespace Minecraft.Controllers
+{
+    public class PlayerManagerController : Controller
+    {
+        private readonly ILogger<PlayerManagerController> _logger;
+        private readonly ApplicationDbContext _context;
+        protected ResponseAPI _response;
+        private readonly IConfiguration _configuration;
+        public PlayerManagerController(ILogger<PlayerManagerController> logger, ApplicationDbContext context, IConfiguration configuration)
+        {
+            _logger = logger;
+            _context = context;
+            _configuration = configuration;
+            _response = new ResponseAPI();
+        }
+
+        // Trong PlayerManagerController.cs
+        public async Task<IActionResult> Index()
+        {
+            // Include(p => p.GameMode) là rất quan trọng để hiển thị tên chế độ chơi
+            var players = await _context.Players.Include(p => p.GameMode).ToListAsync();
+            return View(players);
+        }
+    }
+}
