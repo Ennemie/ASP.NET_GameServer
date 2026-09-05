@@ -462,21 +462,7 @@ Project này tập trung vào những kỹ năng backend/game-server quan trọn
 
 # 📸 API Demo
 
-> 💡 Bạn có thể thêm screenshot Swagger vào đây để README có tính portfolio cao hơn.
-
-```text
-docs/
-└── images/
-    ├── swagger.png
-    ├── login.png
-    └── database.png
-```
-
-Ví dụ:
-
-<p align="center">
-  <img src="docs/images/swagger.png" width="850" alt="Swagger API">
-</p>
+<img width="1808" height="912" alt="image" src="https://github.com/user-attachments/assets/236e3ebf-395b-4483-8ce6-87d1159e0432" />
 
 ---
 
